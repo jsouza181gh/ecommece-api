@@ -13,7 +13,9 @@ from modules.product.models import (
     ProductDescriptionSection
 )
 
-async def createDataBase():
+async def createDataBase(drop_all: bool):
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
+        if drop_all:
+            await conn.run_sync(Base.metadata.drop_all)
+            
         await conn.run_sync(Base.metadata.create_all)
