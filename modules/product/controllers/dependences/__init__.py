@@ -1,5 +1,7 @@
-from .product_category import ProductCategoryServiceDependence
+from .product_category import ProductCategoryDependences
+from .product import ProductDependences
 
 __all__ = [
-    "ProductCategoryServiceDependence"
+    "ProductCategoryDependences",
+    "ProductDependences"
 ]

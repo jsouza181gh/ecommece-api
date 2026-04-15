@@ -1,4 +1,4 @@
-from pydantic import BaseModel, AnyUrl
+from pydantic import BaseModel, AnyUrl, ConfigDict
 from decimal import Decimal
 from uuid import UUID
 
@@ -20,3 +20,5 @@ class ProductSchema(BaseModel):
     currency_code: str
     margin_percentage: Decimal
     main_image_url: AnyUrl
+
+    model_config = ConfigDict(from_attributes=True)

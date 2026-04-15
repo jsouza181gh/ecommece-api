@@ -16,11 +16,11 @@ class ProductCategoryRepository:
         return category
     
 
-    async def get_by_id(self, category_id: str) -> ProductCategory:
+    async def find_by_id(self, category_id: str) -> ProductCategory:
         return await self.session.get(ProductCategory, category_id)
     
 
-    async def list(self, name: Optional[str]) -> List[ProductCategory]:
+    async def find_all(self, name: Optional[str]) -> List[ProductCategory]:
         query = select(ProductCategory)
 
         if name:

@@ -21,20 +21,16 @@ class ProductCategoryService:
             new_category = await self.category_repository.create(category)
 
         except IntegrityError:
-            await self.category_repository.session.rollback()
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail='Category already exists'
             )
 
-        return ProductCategorySchema(
-            id=new_category.id,
-            name=new_category.name
-        )
+        return ProductCategorySchema.model_validate(new_category)
     
 
-    async def get(self, category_id: UUID) -> ProductCategorySchema:
-        category = await self.category_repository.get_by_id(category_id)
+    async def find_by_id(self, category_id: UUID) -> ProductCategorySchema:
+        category = await self.category_repository.find_by_id(category_id)
 
         if not category:
             raise HTTPException(
@@ -42,24 +38,16 @@ class ProductCategoryService:
                 detail='Category not found'
             )
         
-        return ProductCategorySchema(
-            id= category.id,
-            name=category.name
-        )
+        return ProductCategorySchema.model_validate(category)
     
 
-    async def list(self, name: Optional[str]) -> List[ProductCategorySchema]:
-        categories = await self.category_repository.list(name)
+    async def find_all(self, name: Optional[str]) -> List[ProductCategorySchema]:
+        categories = await self.category_repository.find_all(name)
 
-        categories = [
-            ProductCategorySchema(
-                id=category.id,
-                name=category.name
-            )
+        return [
+            ProductCategorySchema.model_validate(category)
             for category in categories
         ]
-
-        return categories
     
 
     async def update(
@@ -68,7 +56,7 @@ class ProductCategoryService:
         category_schema: SaveProductCategorySchema
     ) -> ProductCategorySchema:
 
-        category = await self.category_repository.get_by_id(category_id)
+        category = await self.category_repository.find_by_id(category_id)
 
         if not category:
             raise HTTPException(
@@ -82,19 +70,15 @@ class ProductCategoryService:
             new_category = await self.category_repository.update(category)
 
         except IntegrityError:
-            await self.category_repository.session.rollback()
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail='Category with this name already exists'
             )
 
-        return ProductCategorySchema(
-            id=new_category.id,
-            name=new_category.name
-        )
+        return ProductCategorySchema.model_validate(new_category)
     
     async def delete(self, category_id: UUID) -> None:
-        category = await self.category_repository.get_by_id(category_id)
+        category = await self.category_repository.find_by_id(category_id)
 
         if not category:
             raise HTTPException(
