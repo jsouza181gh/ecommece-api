@@ -22,9 +22,9 @@ class ProductRepository:
         return await self.session.get(Product, product_id)
     
     
-    async def exists(self, category_id: UUID) -> bool:
+    async def exists(self, product_id: UUID) -> bool:
         query = select(
-            exists().where(Product.id == category_id)
+            exists().where(Product.id == product_id)
         )
 
         result = await self.session.scalar(query)

@@ -14,9 +14,9 @@ class ProductService:
     category_repository: ProductCategoryRepository
 
     async def create(self, product_schema: SaveProductSchema) -> ProductSchema:
-        product_category = await self.category_repository.exists(product_schema.category_id)
+        product_category_exists = await self.category_repository.exists(product_schema.category_id)
 
-        if not product_category:
+        if not product_category_exists:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail='Category was not found'
@@ -48,7 +48,7 @@ class ProductService:
         return ProductSchema.model_validate(product)
     
 
-    async def find_all(self) -> ProductSchema:
+    async def find_all(self) -> List[ProductSchema]:
         products = await self.product_repository.find_all()
 
         return [
@@ -62,7 +62,7 @@ class ProductService:
         product_id: UUID, 
         product_schema: SaveProductSchema
     ) -> ProductSchema:
-        product = await self.product_repository.find_by_id(product_id)
+        product: Product = await self.product_repository.find_by_id(product_id)
 
         if not product:
             raise HTTPException(
