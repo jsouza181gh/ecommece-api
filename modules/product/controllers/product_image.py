@@ -72,4 +72,4 @@ async def delete_product_image(
     product_image_service: ProductImageDependences,
     image_id: UUID
 ):
-    await product_image_service(image_id)
+    await product_image_service.delete(image_id)

@@ -24,6 +24,9 @@ class ProductImageService:
 
         max_position = await self.image_repository.get_max_position(image_schema.product_id)
 
+        if max_position is not None:
+            max_position += 1
+
         new_image = self.convert_schema_to_model(image_schema, max_position)
 
         try:
@@ -72,7 +75,7 @@ class ProductImageService:
                 detail='Image was not found'
             )
 
-        image_model = self.convert_schema_to_model(image_schema)
+        image_model = self.convert_schema_to_model(image_schema, image.position)
 
         image.product_id = image_model.product_id
         image.title = image_model.title
@@ -103,10 +106,7 @@ class ProductImageService:
 
 
     @staticmethod
-    def convert_schema_to_model(image_schema: SaveProductImageSchema, position: int | None) -> ProductImage:
-        if position is not None:
-            position += 1
-
+    def convert_schema_to_model(image_schema: SaveProductImageSchema, position: int = 0) -> ProductImage:
         return ProductImage(
             product_id=image_schema.product_id,
             title=image_schema.title,
