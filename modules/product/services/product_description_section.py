@@ -81,7 +81,7 @@ class ProductDescriptionSectionService:
         description_section.subtitle = section_model.subtitle
         description_section.description = section_model.description
         
-        return ProductDescriptionSectionSchema.model_validate(section_schema)
+        return ProductDescriptionSectionSchema.model_validate(description_section)
 
 
     async def delete(self, section_id: UUID) -> None:

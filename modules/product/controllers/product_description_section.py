@@ -5,7 +5,7 @@ from uuid import UUID
 from ..schemas import SaveProductDescriptionSectionSchema, ProductDescriptionSectionSchema
 from .dependences import ProductDescriptionSectionDependences
 
-router = APIRouter(prefix='/product_description', tags=['Product Description'])
+router = APIRouter(prefix='/product_descriptions', tags=['Product Description'])
 
 @router.post(
     '/',
