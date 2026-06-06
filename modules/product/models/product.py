@@ -1,4 +1,4 @@
-from app.config import DEFAULT_CURRENCY
+from config import DEFAULT_CURRENCY
 from infrastructure.database.base import Base
 
 from uuid import UUID

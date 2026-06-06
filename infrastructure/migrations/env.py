@@ -1,4 +1,4 @@
-from app.config import DATABASE_URL
+from config import DATABASE_URL
 from infrastructure.database.base import Base
 
 from logging.config import fileConfig
