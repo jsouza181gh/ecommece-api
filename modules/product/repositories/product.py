@@ -15,33 +15,38 @@ class ProductRepository:
         await self.session.flush()
 
         return product
-    
-    
+
+
     async def find_by_id(self, product_id: UUID) -> Optional[Product]:
-        return await self.session.get(Product, product_id)
-    
-    
-    async def exists(self, product_id: UUID) -> bool:
-        query = select(
-            exists().where(Product.id == product_id)
+        return await self.session.get(
+            Product,
+            product_id
         )
 
-        result = await self.session.scalar(query)
 
-        return bool(result)
-
-    
     async def find_all(self) -> Sequence[Product]:
-        result = await self.session.execute(select(Product))
+        result = await self.session.scalars(
+            select(Product)
+        )
 
-        return result.scalars().all()
-    
+        return result.all()
+
 
     async def update(self, product: Product) -> Product:
         await self.session.flush()
 
         return product
-    
+
 
     async def delete(self, product: Product) -> None:
         await self.session.delete(product)
+
+
+    async def exists(self, product_id: UUID) -> bool:
+        query = select(
+            exists()
+            .where(Product.id == product_id)
+        )
+
+        result = await self.session.scalar(query)
+        return bool(result)
