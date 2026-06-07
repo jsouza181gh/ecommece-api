@@ -18,35 +18,18 @@ class ProductDescriptionSectionRepository:
 
 
     async def find_by_id(self, section_id: UUID) -> Optional[ProductDescriptionSection]:
-        return await self.session.get_one(ProductDescriptionSection, section_id)
-
-
-    async def get_max_position(self, product_id: UUID) -> Optional[int]:
-        query = (
-            select(func.max(ProductDescriptionSection.position))
-            .where(ProductDescriptionSection.product_id == product_id)
+        return await self.session.get(
+            ProductDescriptionSection,
+            section_id
         )
-
-        return await self.session.scalar(query)
-
-
-    async def exists(self, section_id: UUID) -> bool:
-        query = select(
-            exists()
-            .where(ProductDescriptionSection.id == section_id)
-        )
-
-        result = await self.session.execute(query)
-        
-        return bool(result)
 
 
     async def find_all(self) -> Sequence[ProductDescriptionSection]:
-        result = await self.session.execute(
+        result = await self.session.scalars(
             select(ProductDescriptionSection)
         )
 
-        return result.scalars().all()
+        return result.all()
 
 
     async def update(self, new_section: ProductDescriptionSection) -> ProductDescriptionSection:
@@ -57,3 +40,22 @@ class ProductDescriptionSectionRepository:
 
     async def delete(self, section: ProductDescriptionSection) -> None:
         await self.session.delete(section)
+
+
+    async def exists(self, section_id: UUID) -> bool:
+        query = select(
+            exists()
+            .where(ProductDescriptionSection.id == section_id)
+        )
+
+        result = await self.session.scalar(query)
+        return bool(result)
+
+
+    async def get_max_position(self, product_id: UUID) -> Optional[int]:
+        query = (
+            select(func.max(ProductDescriptionSection.position))
+            .where(ProductDescriptionSection.product_id == product_id)
+        )
+
+        return await self.session.scalar(query)

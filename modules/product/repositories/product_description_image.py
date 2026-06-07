@@ -18,7 +18,10 @@ class ProductDescriptionImageRepository:
 
 
     async def find_by_id(self, description_image_id: UUID) -> ProductDescriptionImage:
-        return await self.session.get(ProductDescriptionImage, description_image_id)
+        return await self.session.get(
+            ProductDescriptionImage,
+            description_image_id
+        )
 
 
     async def find_all(self) -> Sequence[ProductDescriptionImage]:
@@ -46,7 +49,6 @@ class ProductDescriptionImageRepository:
         )
 
         result = await self.session.scalar(query)
-
         return bool(result)
 
 
