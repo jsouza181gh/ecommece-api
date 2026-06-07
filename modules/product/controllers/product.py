@@ -16,9 +16,9 @@ async def create_product(
     product_service: ProductDependences,
     payload: SaveProductSchema
 ):
-    product = await product_service.create(payload)
+    new_product = await product_service.create(payload)
 
-    return product
+    return new_product
 
 
 @router.get(
