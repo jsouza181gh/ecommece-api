@@ -13,7 +13,7 @@ class ProductReview(Base):
     product_id: Mapped[UUID] = mapped_column("product_id", PG_UUID(as_uuid=True), ForeignKey("products.id", ondelete="RESTRICT"), nullable=False)
     title: Mapped[str] = mapped_column("title", String(50), nullable=True)
     score: Mapped[int] = mapped_column("score", Integer, nullable=False)
-    description: Mapped[str] = mapped_column("description", Text)
+    description: Mapped[str] = mapped_column("description", Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
     product = relationship(
