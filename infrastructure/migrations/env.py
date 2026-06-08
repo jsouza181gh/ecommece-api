@@ -41,9 +41,6 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    if not DATABASE_URL:
-        raise RuntimeError("DATABASE_URL not configured")
-
     database_url = DATABASE_URL.replace(
         "postgresql+asyncpg",
         "postgresql+psycopg"
@@ -72,6 +69,16 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+    database_url = DATABASE_URL.replace(
+        "postgresql+asyncpg",
+        "postgresql+psycopg"
+    )
+
+    config.set_main_option(
+        "sqlalchemy.url",
+        database_url
+    )
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",

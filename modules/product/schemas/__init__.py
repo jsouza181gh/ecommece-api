@@ -1,6 +1,7 @@
 from .product_description_section import SaveProductDescriptionSectionSchema, ProductDescriptionSectionSchema
 from .product_description_image import SaveProductDescriptionImageSchema, ProductDescriptionImageSchema
 from .product_category import SaveProductCategorySchema, ProductCategorySchema
+from .product_review import SaveProductReviewSchema, ProductReviewSchema
 from .product_image import SaveProductImageSchema, ProductImageSchema
 from .product import SaveProductSchema, ProductSchema
 
@@ -11,6 +12,8 @@ __all__ = [
     "ProductDescriptionImageSchema",
     "SaveProductCategorySchema",
     "ProductCategorySchema",
+    "SaveProductReviewSchema",
+    "ProductReviewSchema",
     "SaveProductImageSchema",
     "ProductImageSchema",
     "SaveProductSchema",
