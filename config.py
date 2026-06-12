@@ -11,12 +11,13 @@ if missing:
 
 DATABASE = {
     'HOST' : os.getenv('DATABASE_HOST'),
+    'PORT' : os.getenv('DATABASE_PORT'),
     'NAME' : os.getenv('DATABASE_NAME'),
     'USER' : os.getenv('DATABASE_USER'),
     'PASSWORD' : os.getenv('DATABASE_PASSWORD')
 }
 
-DATABASE_URL = f"postgresql+asyncpg://{DATABASE['USER']}:{DATABASE['PASSWORD']}@{DATABASE['HOST']}/{DATABASE['NAME']}"
+DATABASE_URL = f"postgresql+asyncpg://{DATABASE['USER']}:{DATABASE['PASSWORD']}@{DATABASE['HOST']}:{DATABASE['PORT']}/{DATABASE['NAME']}"
 MERCADOPAGO_ACCESS_TOKEN = os.getenv('MERCADOPAGO_ACCESS_TOKEN')
 DEFAULT_CURRENCY = os.getenv('DEFAULT_CURRENCY')
 ENVIRONMENT = os.getenv('ENVIRONMENT')
